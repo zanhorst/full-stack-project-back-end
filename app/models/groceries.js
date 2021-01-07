@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 // const itemSchema = require('./items.js')
-const grocerySchema = new mongoose.Schema({
+const groceriesSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -15,4 +15,4 @@ const grocerySchema = new mongoose.Schema({
   timestamps: true
 })
 
-module.exports = mongoose.model('Grocery', grocerySchema)
+module.exports = mongoose.model('Groceries', groceriesSchema)
