@@ -10,7 +10,6 @@ const passport = require('passport')
 // so that a token MUST be passed for that route to be available
 // it will also set `res.user`
 const requireToken = passport.authenticate('bearer', { session: false })
-
 // INDEX
 // GET /groceries/
 router.get('/groceries', requireToken, (req, res, next) => {
@@ -32,7 +31,15 @@ router.get('/groceries/:id', requireToken, (req, res, next) => {
     }))
     .catch(next)
 })
-
+// CREATE
+// POST /groceries/
+router.post('/groceries', requireToken, (req, res, next) => {
+  const groceriesData = req.body.groceries
+  groceriesData.owner = req.user._id
+  Groceries.create(groceriesData)
+    .then(groceries => res.status(201).json({ groceries: groceries }))
+    .catch(next)
+})
 // PATCH
 // PATCH /groceries/:id
 router.patch('/groceries/:id', requireToken, (req, res, next) => {
