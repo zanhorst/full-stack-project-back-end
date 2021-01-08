@@ -1,8 +1,8 @@
 const express = require('express')
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
-// require groceries model
-const Groceries = require('../models/groceries')
+// require grocery model
+const Grocery = require('../models/grocery')
 // pull in error types and the logic to handle them and set status codes
 const handle404 = require('../../lib/custom_errors')
 const passport = require('passport')
@@ -11,54 +11,54 @@ const passport = require('passport')
 // it will also set `res.user`
 const requireToken = passport.authenticate('bearer', { session: false })
 // INDEX
-// GET /groceries/
+// GET /grocery/
 router.get('/groceries', requireToken, (req, res, next) => {
-  Groceries.find({ owner: req.user._id })
-    .then(groceries => res.json({
-      groceries: groceries
+  Grocery.find({ owner: req.user._id })
+    .then(grocery => res.json({
+      grocery: grocery
     }))
     .catch(next)
 })
 // SHOW
-// GET /groceries/:id
+// GET /grocery/:id
 router.get('/groceries/:id', requireToken, (req, res, next) => {
   const id = req.params.id
-  Groceries.findById(id)
+  Grocery.findById(id)
     .then(handle404)
     .populate('owner', '-hashedPassword')
-    .then(groceries => res.json({
-      groceries: groceries
+    .then(grocery => res.json({
+      grocery: grocery
     }))
     .catch(next)
 })
 // CREATE
-// POST /groceries/
+// POST /grocery/
 router.post('/groceries', requireToken, (req, res, next) => {
-  const groceriesData = req.body.groceries
-  groceriesData.owner = req.user._id
-  Groceries.create(groceriesData)
-    .then(groceries => res.status(201).json({ groceries: groceries }))
+  const groceryData = req.body.grocery
+  groceryData.owner = req.user._id
+  Grocery.create(groceryData)
+    .then(grocery => res.status(201).json({ grocery: grocery }))
     .catch(next)
 })
 // PATCH
-// PATCH /groceries/:id
+// PATCH /grocery/:id
 router.patch('/groceries/:id', requireToken, (req, res, next) => {
-  const groceriesData = req.body.groceries
+  const groceryData = req.body.grocery
   const id = req.params.id
-  Groceries.findById(id)
+  Grocery.findById(id)
     .then(handle404)
-    .then(groceries => groceries.updateOne(groceriesData))
+    .then(grocery => grocery.updateOne(groceryData))
     .then(() => res.sendStatus(204))
     .catch(next)
 })
 
 // DELETE
-// DELETE /groceries/:id
+// DELETE /grocery/:id
 router.delete('/groceries/:id', requireToken, (req, res, next) => {
   const id = req.params.id
-  Groceries.findById(id)
+  Grocery.findById(id)
     .then(handle404)
-    .then(groceries => groceries.deleteOne())
+    .then(grocery => grocery.deleteOne())
     .then(() => res.sendStatus(204))
     .catch(next)
 })
