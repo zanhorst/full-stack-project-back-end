@@ -21,7 +21,7 @@ const auth = require('./lib/auth')
 // define server and client ports
 // used for cors and local port declaration
 const serverDevPort = 4741
-const clientDevPort = 7165
+// const clientDevPort = 7165
 
 // establish database connection
 // use new version of URL parser
@@ -37,7 +37,7 @@ const app = express()
 
 // set CORS headers on response from this API using the `cors` NPM package
 // `CLIENT_ORIGIN` is an environment variable that will be set on Heroku
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || `http://localhost:${clientDevPort}` }))
+app.use(cors({ origin: process.env.CLIENT_ORIGIN || `https://protected-taiga-47801.herokuapp.com/` }))
 
 // define port for API to run on
 const port = process.env.PORT || serverDevPort
