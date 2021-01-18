@@ -35,7 +35,7 @@ router.get('/groceries/:id', requireToken, (req, res, next) => {
 // POST /grocery/
 router.post('/groceries', requireToken, (req, res, next) => {
   const groceryData = req.body.grocery
-  groceryData.owner = req.user._id
+  groceryData.owner = req.user.id
   Grocery.create(groceryData)
     .then(grocery => res.status(201).json({ grocery: grocery }))
     .catch(next)
