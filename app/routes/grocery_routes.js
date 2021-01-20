@@ -37,7 +37,7 @@ router.post('/groceries', requireToken, (req, res, next) => {
   const groceryData = req.body.grocery
   groceryData.owner = req.user.id
   Grocery.create(groceryData)
-    .then(grocery => res.status(201).json({ grocery: grocery }))
+    .then(grocery => res.status(201).json({ grocery: grocery.toObject() }))
     .catch(next)
 })
 // PATCH

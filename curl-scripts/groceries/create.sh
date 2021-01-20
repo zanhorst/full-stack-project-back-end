@@ -1,5 +1,5 @@
 API="http://localhost:4741"
-URL_PATH="/grocery"
+URL_PATH="/groceries"
 #NAME="name" sh curl-scripts/groceries/create.sh
 curl "${API}${URL_PATH}" \
   --include \
