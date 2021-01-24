@@ -24,8 +24,8 @@ router.get('/groceries', requireToken, (req, res, next) => {
 router.get('/groceries/:id', requireToken, (req, res, next) => {
   const id = req.params.id
   Grocery.findById(id)
-    .then(handle404)
     .populate('owner', '-hashedPassword')
+    .then(handle404)
     .then(grocery => res.json({
       grocery: grocery
     }))
